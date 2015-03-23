@@ -119,9 +119,10 @@ function setTemplate(){
 function compile(){
 	startCompileAnimation();
 	//サーバーに送信.
-	var url = "http://.......compile.py";
-	var request = createXMLHttpRequest();
+	var url = "CGI/test.py";
+	var request =  new XMLHttpRequest();;//createXMLHttpRequest();
 	request.open("POST", url, true);
+	// request.setRequestHeader("Access-Control-Allow-Origin","*");
 	request.send(editor.getValue());
 	//ハンドラ.
 	request.onreadystatechange = function() {
