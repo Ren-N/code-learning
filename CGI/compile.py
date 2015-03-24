@@ -4,62 +4,70 @@
 import cgi
 import os
 import subprocess
-import codecs
-# import traceback
+import commands
 
-
-# sys.stdout = codecs.getwriter('utf_8')(sys.stdout)
-
-# subprocess.call(["redis-server","/home/shell/redis.conf"])
+GCC_CMD   = "/usr/local/bin/gcc-4.9"
+CPP_CMD   = "/usr/local/bin/g++-4.9"
+JAVAC_CMD = "/usr/bin/javac"
+JAVA_CMD  = "/usr/bin/java"
+PY_CMD    = "/usr/bin/python"
+RB_CMD    = "/usr/bin/ruby"
 
 # カレントディレクトリ変更.
 # path = "/Users/ren/" #絶対パス
 # os.chdir(os.path.dirname(path))
 
+#️ subprocessでは実行できない
 # p = subprocess.Popen(['/bin/ls'], stdout=subprocess.PIPE)
 # print p.stdout.readline()
 # print p.communicate()[0]
 
-if os.getenv('REQUEST_METHOD') == "POST" :
+def compile(lang,filename):
+	out = ""
+	if lang == 'c':
+		out = commands.getoutput( GCC_CMD + ' -o code ' + filename)
+		out = commands.getoutput('./code')
+	elif lang == 'cpp':
+		commands.getoutput( CPP_CMD + ' -o code ' + filename)
+		out = commands.getoutput('./code')
+	elif lang == 'java':
+		# コンパイル作業をmkdirで作ったディレクトリでやり,終わったら削除したほうがいいかもしれない.
+		commands.getoutput( "rm ./*.class" )
+		commands.getoutput( JAVAC_CMD + " " + filename )
+		classname = commands.getoutput("/bin/ls | grep '^[A-Z].*\.class'")
+		classname = classname.split('.')[0]
+		out = commands.getoutput( JAVA_CMD + " " + classname)
+	elif lang == 'js':
+		out = '未対応'
+	elif lang == 'py':
+		out = commands.getoutput( PY_CMD + " " + filename )
+	elif lang == 'rb':
+		out = commands.getoutput( RB_CMD + " " + filename)
+	return out
+
+
+
+# POST取得時に実行.
+if os.getenv('REQUEST_METHOD') == "POST":
 	# POSTのデータ取得.
 	form = cgi.FieldStorage()
 	code = form.getvalue('code', 'none')
 	lang = form.getvalue('lang', 'none')
 
 	# ファイル作成.
-	# filename = 'code.' + lang
-	# f = open(filename, "w")
-	# f.write(code)
-	# f.close()
-	# file(os.path.join('/tmp', item.filename), 'wb')
-
-	# プログラム実行.
-	# out = ""
-	# if lang == 'c':
-	# 	tmp = subprocess.Popen(['/bin/gcc','-o','code',filename], stdout=subprocess.PIPE)
-	# 	out = subprocess.Popen(['./code'],stdout=subprocess.PIPE)
-	# elif lang == 'cpp':
-	# 	tmp = subprocess.Popen(['/bin/gcc','-o','code',filename], stdout=subprocess.PIPE)
-	# 	out = subprocess.Popen(['./code'],stdout=subprocess.PIPE)
-	# elif lang == 'java':
-	# 	# コンパイル作業をmkdirで作ったディレクトリでやり,終わったら削除したほうがいいかもしれない.
-	# 	tmp = subprocess.Popen("rm ./*.class",shell=True, stdout=subprocess.PIPE)
-	# 	tmp = subprocess.Popen(['javac',filename], stdout=subprocess.PIPE)
-	# 	classname = subprocess.Popen("/bin/ls | grep *.class",shell=True, stdout=subprocess.PIPE)
-	# 	out = subprocess.Popen(['java',classname])
-	# elif lang == 'js':
-	# 	out = '未対応'
-	# elif lang == 'py':
-	# 	out = subprocess.Popen(['/bin/python','code.py'],stdout=subprocess.PIPE)
-	# elif lang == 'rb':
-	# 	out = subprocess.Popen(['/bin/ruby','code.rb'],stdout=subprocess.PIPE)
-
-	# HTML
+	filename = 'code.' + lang
+	f = open(filename, "w")
+	f.write(code)
+	f.close()
+	
+	# HTML出力
 	print 'Content-Type: text/html\n\n'
 	print '<html><body>\n'
-	print "aaaaaa"
-	# print os.path.abspath(__file__)  # スクリプトの絶対パス
+	print compile(lang,filename)
 	print '</body></html>'
+	print ""
+
+
 
 # TEST
 if False :
