@@ -19,7 +19,6 @@ function init(){
     var selecter = document.getElementById('selectedLang');
 	var lang = selecter.options[selecter.selectedIndex].value;
     setEditorMode(lang);
-	editor.getSession().setValue(document.getElementById( 'text' ).value);
 	setTabName('code.'+lang);
 	// keybind emacs
 	editor.setKeyboardHandler("ace/keyboard/emacs");
@@ -33,6 +32,37 @@ function init(){
 			onSaveFile();
 		}
 	});
+	// エディタに文字がなければ, 注意書きを書く.
+	text = document.getElementById( 'text' ).value;
+	if(text !== ""){
+		editor.getSession().setValue(text);
+	}else{
+		var warn = Array(2);
+		warn[0] = "[注意]";
+		warn[1] = "Javaのクラス名はCodeにしてください.";
+		var cmtout;
+		switch(lang){
+			case 'c':
+			case 'cpp':
+			case 'java':
+			case 'js':
+					cmtout = "// "
+				break;
+			case 'py':
+			case 'rb':
+					cmtout = "# "
+				break;
+			default:
+					cmtout = "// "
+				break;
+		}
+		var comment = "";
+		for(var i=0; i<warn.length; i++){
+			comment = comment + cmtout+warn[i]+"\n";
+		}
+		// editor.getSession().setValue(comment);
+	}
+	
 }
 
 function setEditorMode(lang){
@@ -124,7 +154,7 @@ function compile(){
 		lang : lang,
 		code : editor.getValue() 
 	};
-	var url = "CGI/test.py";
+	var url = "CGI/compile.py";
 	multiPost(url,data);
 	
 }
