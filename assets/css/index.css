@@ -1,0 +1,182 @@
+html,body{
+	height: 100%;
+}
+
+* {
+margin: 0;
+padding: 0;
+}
+/* header ----------------------------------- */
+header{
+	width: 100%;
+	height: 100px;
+	/*background: #f4c995;*/
+	background-color: rgba(255, 255, 255, .1);
+	position: fixed;
+	z-index: 9999;
+}
+
+header .h_logo{
+	float: left;
+	margin-top: 20px;
+}
+
+header nav{
+	float: right;
+	margin-top: 42px;
+	overflow: hidden;
+}
+header nav ul li{
+	float: left;
+	margin-left: 30px;
+}
+
+header nav ul li a{
+	text-decoration: none;
+	font-family: 'LatoBold', arial;
+	font-weight: bold;
+	font-size: 16px;
+	color: #fef8f1;
+	letter-spacing: 1px;
+}
+
+header nav ul li a:hover{
+	color: #ffffff;
+}
+
+footer {
+	/*background-color: #F7F7F7;*/
+	background-color: #F5F5F5;
+	position: fixed;
+    width: 100%;
+    height: 40%;
+    bottom: 0;
+}
+
+
+/*  Billboard  */
+#backboard {
+	width: 100%;
+	height: 1200%;
+	background:url(../images/backboard_green.png) top center repeat;
+	background-attachment: fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+}
+
+
+.page-title{
+	width: 100%;
+	text-align: center;
+	position: absolute;
+	top: 255px;
+}
+
+.page-title .title{
+	font-family: 'LatoBold', arial;
+	font-weight: Bold;
+	font-size: 20px;
+	color: #ffffff;
+	text-transform: uppercase;
+	letter-spacing: 1.5px;
+}
+
+.page-title .title_desc{
+	/*font-family: 'HoneyLight';*/
+	font-size: 19px;
+	color: #ffffff;
+	margin-top: 10px;
+}
+
+.caption{
+	width: 100%;
+	text-align: center;
+	position: absolute;
+	top: 270px;
+}
+
+.caption .cap_title{
+	font-family: 'LatoBold', arial;
+	font-weight: Bold;
+	font-size: 40px;
+	color: #ffffff;
+	text-transform: uppercase;
+	letter-spacing: 1.5px;
+}
+
+.caption .cap_desc{
+	font-family: 'HoneyLight';
+	font-size: 50px;
+	color: #ffffff;
+	margin-top: 10px;
+}
+
+
+/*  Services  */
+
+.services .S_icons{
+	margin-top: -80px;
+	padding-left: 64px;
+	margin-bottom: 30px;
+
+}
+
+.services hr.sp{
+	display: inline-block;
+	width: 230px;
+	height: 10px;
+	border: 0;
+	/*background: url('../img/separator.png') no-repeat;*/
+	margin-bottom: 75px;
+	margin-left: -4px;
+}
+
+.services img{
+	margin-left: -4px;
+}
+
+.services .desc{
+	width: 100%;
+	overflow: hidden;
+}
+
+.services .desc li{
+	list-style: none;
+	float: left;
+	width: 235px;
+	height: auto;
+	text-align: center;
+	margin-right: 155px;
+}
+
+.services .desc li:first-child{
+	margin-left: 22px;
+}
+
+.services .desc li:last-child{
+	margin-right: 0;
+}
+
+.services .desc li h3{
+	font-family: 'LatoBold', arial;
+	font-weight: bold;
+	font-size: 25px;
+	color: #646363;
+	margin-bottom: 30px;
+}
+
+.services .desc li p{
+	font-family: 'LatoRegular', arial;
+	font-size: 14px;
+	color: #7e7e7e;
+	line-height: 20px;
+}
+.wrapper{
+	width: 1060px;
+	height: auto;
+	margin: 0 auto;
+}
+
+
